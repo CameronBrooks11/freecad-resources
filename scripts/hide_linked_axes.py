@@ -1,16 +1,12 @@
 # Loop through all objects in the active document
 for o in App.ActiveDocument.Objects:
-    # Check if the object is a Sketch
-    if "Sketcher::SketchObject" in o.TypeId:
-        # Hide the object in the active document
-        o.ViewObject.Visibility = False
     # Check if the object is a Link
-    elif "App::Link" in o.TypeId:
+    if "App::Link" in o.TypeId and getattr(o, "LinkedObject", None) is not None:
         # Access the linked document
         linked_doc = o.LinkedObject.Document
         # Loop through all objects in the linked document
         for linked_o in linked_doc.Objects:
-            # Check if the object is a Sketch
-            if "Sketcher::SketchObject" in linked_o.TypeId:
+            # Check if the object label starts with "Axis_"
+            if linked_o.Label.startswith("Axis_"):
                 # Hide the linked object
                 linked_o.ViewObject.Visibility = False
