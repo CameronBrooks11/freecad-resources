@@ -5,7 +5,7 @@ for o in App.ActiveDocument.Objects:
         o.ViewObject.Visibility = False
 
     # Check if the object is a Link to go through its linked document
-    elif "App::Link" in o.TypeId:
+    elif "App::Link" in o.TypeId and getattr(o, "LinkedObject", None) is not None:
         # Access the linked document
         linked_doc = o.LinkedObject.Document
         # Loop through all objects in the linked document

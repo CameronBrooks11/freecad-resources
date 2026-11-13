@@ -1,7 +1,7 @@
 # Loop through all objects in the active document
 for o in App.ActiveDocument.Objects:
     # Check if the object is a Link
-    if "App::Link" in o.TypeId:
+    if "App::Link" in o.TypeId and getattr(o, "LinkedObject", None) is not None:
         # Access the linked document
         linked_doc = o.LinkedObject.Document
         # Loop through all objects in the linked document
